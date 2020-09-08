@@ -1,12 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.scss';
-import App from './components/App/App';
+require('dotenv').config();
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const express = require('express');
 
+const routes = require('./routes');
+
+const { connectToDB } = require('./utils/db'); 
+
+const app =  express();
+
+app.use (express.json());//get data from req.body needs app.use(express.json())
+
+app.use('/api', routes);
+
+connectToDB()
+
+app.listen(3000, () => {
+    console.log('server listening')
+});   
